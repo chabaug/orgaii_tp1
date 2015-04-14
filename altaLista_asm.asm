@@ -21,6 +21,8 @@
 ; YA IMPLEMENTADAS EN C
 	extern string_iguales
 	extern insertarAtras
+	extern malloc
+	extern free
 
 ; /** DEFINES **/    >> SE RECOMIENDA COMPLETAR LOS DEFINES CON LOS VALORES CORRECTOS
 	%define NULL 	0
@@ -55,23 +57,33 @@ section .text
 
 	; estudiante *estudianteCrear( char *nombre, char *grupo, unsigned int edad );
 	estudianteCrear:
-		push rbp
-		mov rbp, rsp
-		push rbx
-		push r12
-		push r13
-		push r14
-		push r15
+		;push rbp
+		;mov rbp, rsp
+		;push rbx
+		;push r12
+		;push r13
+		;push r14
+		;push r15
 
+		;Guardo los parametros
+		mov rbx,  rdi	; *nombre
+		mov r12,  rsi 	; *grupo
+		mov r13d, edx	; edad
 
+		;Reservo memoria
+		mov edi, ESTUDIANTE_SIZE
+		call malloc
+		mov r14, rax	; r14 = puntero a la posicion donde se guardara el estudiante
 
-		pop r15
-		pop r14
-		pop r13
-		pop r12
-		pop rbx
-		pop rbp
-		ret
+		;Creo al estudiante copiando cada parametro
+		
+		;pop r15
+		;pop r14
+		;pop r13
+		;pop r12
+		;pop rbx
+		;pop rbp
+		;ret
 
 	; void estudianteBorrar( estudiante *e );
 	estudianteBorrar:
@@ -153,4 +165,35 @@ section .text
 	; en rax tengo la longitud del string
 
 	
-		
+	string_copiar: 
+		; en rdi esta el puntero al char;
+		;rax va a guardar el puntero a la primer dirección de la string pasada por copia
+		push rbp 
+		mov rbp, rsp
+		push rbx
+		push r12
+		mov rbx, rdi	;Backup de puntero al string
+		; Calculo la longitud del string a copiar
+		call string_longitud 	
+		mov r12, rax 		
+		inc r12
+		; Reservo memoria
+		mov rdi, r12	; Pido el tamaño del string
+		call malloc	
+		mov BYTE [rax+r12-1], 0
+		dec r12
+		cmp r12, 0
+		jz string_copiar.terminar	; si vale cero, termino
+		mov rcx, r12 			; el contador tiene el tamaño del string para copiar desde atras 
+		string_copiar.loop:
+			mov r12b, [rbx+rcx-1]
+			mov [rax+rcx-1], r12b
+			loop string_copiar.loop
+
+		string_copiar.terminar:
+
+		pop r12
+		pop rbx
+		pop rbp
+		ret
+	
