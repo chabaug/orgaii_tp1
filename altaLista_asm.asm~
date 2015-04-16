@@ -23,11 +23,6 @@
 	extern insertarAtras
 	extern malloc
 	extern free
-	extern fopen
-	extern fclose
-	extern fputs
-	extern fprintf
-	extern printf
 
 ; /** DEFINES **/    >> SE RECOMIENDA COMPLETAR LOS DEFINES CON LOS VALORES CORRECTOS
 	%define NULL 	0
@@ -51,7 +46,6 @@
 
 section .rodata
 
-	estudiante: DB "%s", 10, 9, "%s", 10, 9, "%u", 10,0
 
 section .data
 
@@ -63,12 +57,13 @@ section .text
 
 	; estudiante *estudianteCrear( char *nombre, char *grupo, unsigned int edad );
 	estudianteCrear:
-		push rbp
-		mov rbp, rsp
-		push rbx
-		push r12
-		push r13
-		push r14
+		;push rbp
+		;mov rbp, rsp
+		;push rbx
+		;push r12
+		;push r13
+		;push r14
+		;push r15
 
 		;Guardo los parametros
 		mov rbx,  rdi	; *nombre
@@ -80,153 +75,31 @@ section .text
 		call malloc
 		mov r14, rax	; r14 = puntero a la posicion donde se guardara el estudiante
 
-		;Creo al estudiante copiando cada parametro con el auxiliar string_copiar
-		;Nombre
-		mov rdi, rbx			
-		call string_copiar 		
-		mov [r14+OFFSET_NOMBRE], rax	
-
-		;Grupo
-		mov rdi, r12			
-		call string_copiar 		
-		mov [r14+OFFSET_GRUPO], rax	
-
-		;Edad (directamente despues del grupo, uso la mitad del registro)
-		mov [r14+OFFSET_EDAD], r13d	
+		;Creo al estudiante copiando cada parametro
 		
-		; se devuelve en rax la direccion del struct estudiante creado
-		mov rax, r14 			
-
-		pop r14
-		pop r13
-		pop r12
-		pop rbx
-		pop rbp
-		ret
+		;pop r15
+		;pop r14
+		;pop r13
+		;pop r12
+		;pop rbx
+		;pop rbp
+		;ret
 
 	; void estudianteBorrar( estudiante *e );
 	estudianteBorrar:
-		push rbp
-		mov rbp, rsp
-		push rbx
-		sub rbp, 8 ;Tengo que alinear
-		
-		;Guardo los parametros
-		mov rbx, rdi 
-
-		;Libero cada espacio
-		;Nombre
-		mov rdi, [rbx+OFFSET_NOMBRE] 
-		call free
-	
-		;Grupo
-		mov rdi, [rbx+OFFSET_GRUPO]
-		call free
-
-		;Estudiante
-		mov rdi, rbx
-		call free
-		
-		add rbp, 8 ;Realineo
-		pop rbx
-		pop rbp
-		ret
+		; COMPLETAR AQUI EL CODIGO
 
 	; bool menorEstudiante( estudiante *e1, estudiante *e2 ){
 	menorEstudiante:
-		push rbp 
-		mov rbp, rsp
-		push rbx
-		push r12
-		push r13
-		add rbp, 8 
-		
-		;Guardo los parametros
-		mov rbx, rdi   ; *e1
-		mov r12, rsi   ; *e2
-
-		;Chequeo los nombres con el auxiliar string_iguales
- 		mov rdi, [rbx+OFFSET_NOMBRE]	; rdi == *e1
-		mov rsi, [r12+OFFSET_NOMBRE]	; rsi == *e2
-		call string_iguales 			
-		cmp rax, 0
-		jne menorEstudiante.cmp_edad	; Si tienen el mismo nombre => chequeo edades, sino veo cual es menor
-
-		;Chequeo los nombres con el auxiliar string_menor
-		mov rdi, [rbx+OFFSET_NOMBRE]	; rdi == *e1
-		mov rsi, [r12+OFFSET_NOMBRE]	; rsi == *e2
-		call string_menor 		
-		jmp menorEstudiante.terminar	; Tengo el nombre del menor estudiante
-
-		menorEstudiante.cmp_edad:
-			mov r13d, DWORD [rbx+OFFSET_EDAD]	; r13d == edad de e1
-			cmp r13d, DWORD [r12+OFFSET_EDAD]	; Comparo con edad de e2
-			jle menorEstudiante.ret_true		; Si edad de e1 es menor o igual, salto a devolver verdadero
-			mov QWORD rax, FALSE			; Sino, devuelvo falso
-			jmp menorEstudiante.terminar		; Termino
-
-		menorEstudiante.ret_true:
-			mov QWORD rax, TRUE
-
-		menorEstudiante.terminar:
-
-		sub rbp, 8
-		pop r13
-		pop r12
-		pop rbx
-		pop rbp
-		ret
+		; COMPLETAR AQUI EL CODIGO
 
 	; void estudianteConFormato( estudiante *e, tipoFuncionModificarString f )
 	estudianteConFormato:
-		push rbp
-		mov rbp, rsp
-		push rbx
-		push r12
-
-		;Guardo los parametros
-		mov rbx, rdi	; *e
-		mov r12, rsi	; f
-
-		;Modifico el nombre
-		mov rdi, [rbx+OFFSET_NOMBRE]	; rdi == nombre de e
-		call r12
-
-		;Modifico el nombre
-		mov rdi, [rbx+OFFSET_GRUPO]	; rdi == grupo de e
-		call r12
-
-		pop r12
-		pop rbx
-		pop rbp
-		ret
+		; COMPLETAR AQUI EL CODIGO
 	
 	; void estudianteImprimir( estudiante *e, FILE *file )
 	estudianteImprimir:
-		push rbp
-		mov rbp, rsp
-		push rbx
-		push r12
-		
-		;Guardo los parametros
-		mov rbx, rdi 	; *e
-		mov r12, rsi	; *file
-
-		;Paso los parametros a la funcion auxiliar fprintf
-		mov rdi, r12					; paso como primer parametro el puntero al archivo
-		mov rsi, estudiante	; paso el puntero al formato del string (char*)
-		mov rdx, [rbx+OFFSET_NOMBRE]	; paso el puntero al nombre
-		mov rcx, [rbx+OFFSET_GRUPO]		; paso el puntero al grupo
-		mov r8, 0
-		mov r8d, [rbx+OFFSET_EDAD]		; paso el entero
-		
-		;llamo a printf
-		call fprintf
-
-		pop r12
-		pop rbx
-		pop rbp
-		ret
+		; COMPLETAR AQUI EL CODIGO
 
 
 ;/** FUNCIONES DE ALTALISTA Y NODO **/    >> PUEDEN CREAR LAS FUNCIONES AUXILIARES QUE CREAN CONVENIENTES
@@ -234,67 +107,15 @@ section .text
 
 	; nodo *nodoCrear( void *dato )
 	nodoCrear:
-		push rbp
-		mov rbp, rsp
-		push rbx
-		sub rbp, 8
-		
-		;Guardo el parametro
-		mov rbx, rdi	; *dato
-		
-		;Reservo memoria
-		mov edi, NODO_SIZE  ; edi == tamaño de nodo
-		call malloc	
-		
-		;Seteo los parametros del nodo
-		mov QWORD [rax+OFFSET_SIGUIENTE], 0	; *siguiente == null
-		mov QWORD [rax+OFFSET_ANTERIOR], 0	; *anterior == null
-		mov [rax+OFFSET_DATO], rbx		; *dato == rbx
-
-		add rbp,8
-		pop rbx
-		pop rbp
-		ret
+		; COMPLETAR AQUI EL CODIGO
 
 	; void nodoBorrar( nodo *n, tipoFuncionBorrarDato f )
 	nodoBorrar:
-		push rbp
-		mov rbp, rsp
-		push rbx
-		push r12
-		
-		;Guardo los parametros
-		mov rbx, rdi ; *n
-		mov r12, rsi ; f
-
-		;Borro el dato
-		mov rdi, [rbx+OFFSET_DATO]	; rdi == dato de n
-		call r12			;Llamo a tipoFuncionBorrarDato
-		
-		;Libero el nodo
-		mov rdi, rbx			; rdi == *n
-		call free
-		
-		pop r12
-		pop rbx
-		pop rbp
-		ret
+		; COMPLETAR AQUI EL CODIGO
 
 	; altaLista *altaListaCrear( void )
 	altaListaCrear:
-		push rbp
-		mov rbp, rsp
-		
-		;Reservo memoria
-		mov rdi, ALTALISTA_SIZE			; rdi == tamaño de lista
-		call malloc
-
-		;Seteo los parametros de la lista
-		mov QWORD [rax+OFFSET_PRIMERO], 0 	; *primero == null
-		mov QWORD [rax+OFFSET_ULTIMO],  0	; *ultimo == null
-
-		pop rbp
-		ret
+		; COMPLETAR AQUI EL CODIGO
 
 	; void altaListaBorrar( altaLista *l, tipoFuncionBorrarDato f )
 	altaListaBorrar:
