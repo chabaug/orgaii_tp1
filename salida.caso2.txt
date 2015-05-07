@@ -1,0 +1,40 @@
+>>>>>>>>>>>>>>>> PROBANDO MENOR-ESTUDIANTE
+>>>>>>>>>>>>>>>> PROBANDO INSERTAR-ORDENADO
+ABEL
+	VACIO
+	22
+AGUSTINA
+	TIRA DE ASADO
+	23
+>>>>>>>>>>>>>>>> PROBANDO EDAD-MEDIA
+edadMedia: 22.50000
+>>>>>>>>>>>>>>>> PROBANDO ESTUDIANTE-CON-FORMATO
+>>>>>>>>>>>>>>>> PROBANDO INVARIANTE DE ALTALISTA
+aGUSTINA | tIRA DE ASADO | 23
+aBEL | vACIO | 22
+>>>>>>>>>>>>>>>> PROBANDO ALTALISTA-FILTRAR
+Agustina | Tira de asado | 23
+.................
+Abel | Vacio | 22
+.................
+<vacia>
+....antes.......
+aBEL | vACIO | 22
+aGUSTINA | tIRA DE ASADO | 23
+....despues.......
+aBEL
+	vACIO
+	22
+>>>>>>>>>>>>>>>> PROBANDO INVARIANTE DE ALTALISTA
+aBEL | vACIO | 22
+>>>>>>>>>>>>>>>> PROBANDO ALTALISTA-FILTRAR
+....antes.......
+vALERIA | cHINCHULIN | 29
+aGUSTINA | pROVOLETTA | 22
+aBEL | vACIO | 22
+....despues.......
+aGUSTINA | pROVOLETTA | 22
+aBEL | vACIO | 22
+>>>>>>>>>>>>>>>> PROBANDO INVARIANTE DE ALTALISTA
+aBEL | vACIO | 22
+aGUSTINA | pROVOLETTA | 22
